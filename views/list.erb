@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>最寄り駅リスト</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	  <link rel="shortcut icon" href="/favicon.ico">
+		<meta property="og:title" content="フォーム">
+<meta property="og:image" content="https://express-ユーザー名.c9users.io/logo.png"/>
+<meta name="description" content="緯度経度から最寄り駅を表示するサイトです。">
+<meta property="og:description" content="緯度経度から最寄り駅を表示するサイトです。">
+	<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@300&display=swap" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+	<%#Jquery%>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://kit.fontawesome.com/8d274db0c1.js" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+	<div>
+		<div>
+		<% @stations.each do |station|%>
+			<div class="station">
+				<span class="line"><%=station["line"]%></a></span>
+				<span class="prev"><%=station["prev"]%></span>
+				<!--アドバンス、名前にURLを付与
+				<span class="name"><a href="https://www.google.co.jp/maps/@<%=station["y"]%>,<%=station["x"]%>,12z">  <%=station["name"]%>  </a></span>
+				-->
+				<span class="name"><%=station["name"]%></span>
+				<span class="next"><%=station["next"]%></span>
+			</div>
+		<%end%>
+	</div>
+
+	<div id="detail">
+		<div>
+			<h2>次の駅</h2>
+		</div>
+		<div class="next">
+		</div>
+	</div>
+
+	<div id="detail">
+		<div>
+			<h2>前の駅</h2>
+		</div>
+		<div class="prev">
+		</div>
+	</div>
+  <!--表示されない？？？ -->
+	</div>
+	<script>
+	window.onload= function() {
+		$(".station").click(function(){
+			var line=$(".line",this).text();
+			var name=$(".name",this).text();
+			$.ajex("/api/station",{
+				type: "GET",
+				data: {"line": line,"name":name},
+				datatype: 'json'
+			})
+			.done(function(json){
+				$("#detail .next").text(json["next"])
+				$("#detail .prev").text(json["prev"])
+			});
+		});
+	}
+	</script>
+
+
+</body>
+</html>

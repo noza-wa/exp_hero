@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+  <meta charset="UTF-8">
+  <title>フォーム</title>
+  <meta property="og:image" content="https://express-ユーザー名.c9users.io/logo.png"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <meta property="og:title" content="フォーム">
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@300&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<meta name="description" content="緯度経度から最寄り駅を表示するサイトです。">
+<meta name="og:description" content="緯度経度から最寄り駅を表示するサイトです。">
+<script src="https://kit.fontawesome.com/8d274db0c1.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="d-flex align-items-center justify-content-center search">
+        <form action="list" method="get" class="form-inline">
+        <input type="text" name="x" id="x" placeholder="x" class="form-control mx2">
+        <input type="text" name="y" id="y" placeholder="y" class="form-control mx2">
+        <button type="submit" value="検索"><i class="fas fa-search"></i></button>
+        </form>
+
+        <form action="memo" method="post">
+        <input type="text" name="memo" id="memo" placeholder="memo">
+        <button type="submit">メモを残す</button>
+        </form>
+      </div>
+    </div>
+
+  <h2 class="text-center my-5"><i class="fas fa-history"></i>検索履歴</h2>
+    <div class="row d-flex justify-content-center">
+      <% @histories.each do |history|%>
+      <div class="card col-lg-2 m-1 card-station">
+        <div class="card-body">
+          <a href="https://www.google.co.jp/maps/@<%=history["y"]%>,<%=history["x"]%>,12z"> <%= history.x%>,<%=history.y%> </a>
+          <div class="d-flex flex-row-reverse text-muted">
+            <%if history.favorite%>
+              <form action="<%= history.id%>/update" method="post">
+                <button type="submit" value="解除"><i class="fas fa-heart heart"></i></button>
+              </form>
+            <%else%>
+              <form action="<%= history.id%>/update" method="post">
+                <button type="submit" value="お気に入り"><i class="far fa-heart text-muted"></i></button>
+              </form>
+            <%end%>
+            <form action="<%= history.id%>/delete" method="post">
+              <button type="submit" value="削除"><i class="far fa-trash-alt text-muted"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+
+    <h2 class="text-center my-5"><i class="fas fa-heart"></i>お気に入り</h2>
+    <div class="row d-flex justify-content-center">
+      <% if @favorites.empty?%>  <!--https://qiita.com/somewhatgood@github/items/b74107480ee3821784e6  -->
+      <h3>お気に入りが空です。</h3>
+
+      <%else%>
+
+        <% @favorites.each do |favorite|%>
+        <div class="card col-lg-2 m-1">
+          <div class="card-body">
+            <a href="https://www.google.co.jp/maps/@<%=favorite["y"]%>,<%=favorite["x"]%>,12z"><%=favorite.x%>, <%=favorite.y%></a>
+          </div>
+        </div>
+        <% end %>
+      <%end%>
+    </div>
+
+    <h2>メモ</h2>
+    <div>
+      <p>aaaa  <%= @memo%>  </p>
+    </div>
+</body>
+</html>
