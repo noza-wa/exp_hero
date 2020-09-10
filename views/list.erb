@@ -18,40 +18,95 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://kit.fontawesome.com/8d274db0c1.js" crossorigin="anonymous"></script>
 
-	<link rel="stylesheet" href="./style.css">
+	<style>
+	* {}
+
+body {
+  background-color: #fcfffa;
+  font-family: 'M PLUS 1p', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.4rem;
+  color: #013529;
+}
+
+input {
+  border-color: #013529 !important
+}
+
+button {
+  background: transparent;
+  border: none;
+}
+
+.search {
+  height: 50vh;
+}
+
+.search button {
+  color: #013529;
+  background-color: none;
+}
+
+.card {
+  border-color: #f0f6da;
+}
+
+.card-body {
+  font-size: 0.5rem;
+  text-align: center;
+}
+
+.heart {
+  color: red !important
+}
+
+.line {
+  font-size: .5rem;
+}
+
+.fa-subway {
+  font-size: 1.2rem;
+  color: #013529;
+}
+
+.name {
+  font-size: 1rem;
+}
+	</style>
 </head>
 <body>
 	<div>
-		<div>
+
+		<h2 class="text-center my-5"><%=@x%>,<%= @y%>の最寄駅 </h2>
+		<div class="row d-flex justify-content-center">
 		<% @stations.each do |station|%>
-			<div class="station">
-				<span class="line"><%=station["line"]%></a></span>
-				<span class="prev"><%=station["prev"]%></span>
+			<div class="card col-lg-2 m-1 station" data-toggle="modal" data-target="#modal">
+				<div class="card-body">
+				<p class="line my-1">
+				<%=station["line"]%></p>
+				<i class="fas fa-subway my-1"></i>
+				<p class="name my-1">
+				<%=station["name"]%></span></p>
 				<!--アドバンス、名前にURLを付与
 				<span class="name"><a href="https://www.google.co.jp/maps/@<%=station["y"]%>,<%=station["x"]%>,12z">  <%=station["name"]%>  </a></span>
 				-->
-				<span class="name"><%=station["name"]%></span>
-				<span class="next"><%=station["next"]%></span>
+				</div>
 			</div>
 		<%end%>
-	</div>
+		</div>
 
-	<div id="detail">
-		<div>
-			<h2>次の駅</h2>
+		<div class="modal fade" id="model" tabindex="-1" role="dialog" aria-labelledby="detail" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centerd" role="document">
+		<div id="detail" class="modal-content">
+			<div class="modal-header text-center">
+				<h2>次の駅</h2>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body text-center next"></div>
 		</div>
-		<div class="next">
 		</div>
-	</div>
-
-	<div id="detail">
-		<div>
-			<h2>前の駅</h2>
-		</div>
-		<div class="prev">
-		</div>
-	</div>
-  <!--表示されない？？？ -->
 	</div>
 	<script>
 	window.onload= function() {

@@ -14,7 +14,66 @@
 <meta name="description" content="緯度経度から最寄り駅を表示するサイトです。">
 <meta name="og:description" content="緯度経度から最寄り駅を表示するサイトです。">
 <script src="https://kit.fontawesome.com/8d274db0c1.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="./style.css">
+
+<style>
+* {
+
+}
+
+body {
+  background-color: #fcfffa;
+  font-family: 'M PLUS 1p', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.4rem;
+  color: #013529;
+}
+
+input {
+  border-color: #013529 !important
+}
+
+button {
+  background: transparent;
+  border: none;
+}
+
+
+.search {
+  height: 50vh;
+}
+
+.search button {
+  color: #013529;
+  background-color: none;
+}
+
+.card {
+  border-color: #f0f6da;
+}
+
+.card-body {
+  font-size: 0.5rem;
+  text-align: center;
+}
+
+.heart {
+  color: red !important
+}
+
+.line {
+  font-size: .5rem;
+}
+
+.fa-subway {
+  font-size: 1.2rem;
+  color: #013529;
+}
+
+.name {
+  font-size: 1rem;
+}
+
+</style>
   </head>
   <body>
     <div class="container-fluid">
@@ -23,11 +82,6 @@
         <input type="text" name="x" id="x" placeholder="x" class="form-control mx2">
         <input type="text" name="y" id="y" placeholder="y" class="form-control mx2">
         <button type="submit" value="検索"><i class="fas fa-search"></i></button>
-        </form>
-
-        <form action="memo" method="post">
-        <input type="text" name="memo" id="memo" placeholder="memo">
-        <button type="submit">メモを残す</button>
         </form>
       </div>
     </div>
@@ -72,11 +126,6 @@
         </div>
         <% end %>
       <%end%>
-    </div>
-
-    <h2>メモ</h2>
-    <div>
-      <p>aaaa  <%= @memo%>  </p>
     </div>
 </body>
 </html>
