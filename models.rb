@@ -1,6 +1,3 @@
-##消去
-
-
 require 'bundler/setup'
 Bundler.require
 if development?
