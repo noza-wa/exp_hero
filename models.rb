@@ -1,4 +1,4 @@
-ActiveRecord::Base.establish_connection("sqlite3:db/development.db")
+##消去
 
 
 require 'bundler/setup'
